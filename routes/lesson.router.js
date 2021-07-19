@@ -20,4 +20,22 @@ router.get(
   })
 );
 
+router.post(
+  '/',
+  asyncErrorHandler(async (req, res) => {
+    req.logger('lesson.router POST /lessons/');
+
+    console.log(req.body);
+
+    const lesson = await lessonController.createOne({
+      logger: req.logger,
+      payload: req.body,
+    });
+
+    res.status(200).send(lesson);
+
+    req.logger(`RES: ${req.method}- ${req.originalUrl} -${res.statusCode}`);
+  })
+);
+
 export default router;

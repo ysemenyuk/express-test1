@@ -1,7 +1,5 @@
-import sequelize from 'sequelize';
-const { DataTypes } = sequelize;
 
-export default (sequelize) =>
+export default (sequelize, DataTypes) =>
   sequelize.define(
     'lesson',
     {
