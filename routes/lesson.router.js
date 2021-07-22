@@ -25,8 +25,6 @@ router.post(
   asyncErrorHandler(async (req, res) => {
     req.logger('lesson.router POST /lessons/');
 
-    console.log(req.body);
-
     const lesson = await lessonController.createOne({
       logger: req.logger,
       payload: req.body,
