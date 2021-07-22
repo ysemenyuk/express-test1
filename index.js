@@ -1,11 +1,18 @@
 import express from 'express';
 import debug from 'debug';
 
-import db from './dbConfig.js';
 import requestLogger from './middlewares/logger.middleware.js';
 import { errorHandler } from './middlewares/errorHandler.middleware.js';
 
 import lessonRouter from './routes/lesson.router.js';
+
+import Knex from 'knex';
+import knexConfig from './knexfile.js';
+import pkg from 'objection';
+const { Model } = pkg;
+
+const knex = Knex(knexConfig.development);
+Model.knex(knex);
 
 const app = express();
 const logger = debug('server');
@@ -21,14 +28,6 @@ app.get('/', (req, res) => {
 });
 
 app.use(errorHandler);
-
-try {
-  await db.sequelize.authenticate();
-  await db.sequelize.sync();
-  logger('Connection has been established successfully.');
-} catch (error) {
-  logger('Unable to connect to the database:', error);
-}
 
 const PORT = 4000;
 app.listen(PORT, () => {

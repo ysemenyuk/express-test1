@@ -4,10 +4,10 @@ services:
     container_name: pg_test
     image: postgres
     restart: always
-    logging:
-      options:
-        max-size: 10m
-        max-file: '3'
+    # logging:
+    # options:
+    #   max-size: 10m
+    #   max-file: '3'
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: root
