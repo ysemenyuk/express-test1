@@ -6,14 +6,6 @@ import { errorHandler } from './middlewares/errorHandler.middleware.js';
 
 import lessonRouter from './routes/lesson.router.js';
 
-import Knex from 'knex';
-import knexConfig from './knexfile.js';
-import pkg from 'objection';
-const { Model } = pkg;
-
-const knex = Knex(knexConfig.development);
-Model.knex(knex);
-
 const app = express();
 const logger = debug('server');
 

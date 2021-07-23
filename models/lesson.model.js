@@ -2,6 +2,8 @@ import pkg from 'objection';
 const { Model } = pkg;
 // import path from 'path';
 
+import knex from '../dbConfig.js';
+
 import Student from './student.model.js';
 import Teacher from './teacher.model.js';
 
@@ -12,24 +14,25 @@ export default class Lesson extends Model {
 
   static get modifiers() {
     return {
-      filterDate(query, dates) {
+      filterByDate(query, dates) {
         if (dates) query.whereBetween('date', dates);
       },
-      filterStatus(query, status) {
+      filterByStatus(query, status) {
         if (status) query.where('status', status);
       },
-      filterTeachers(query, teachers) {
+      filterByTeachers(query, teachers) {
         if (teachers) {
-          query.whereExists(function () {
-            this.select('*')
+          query.whereExists(
+            knex
+              .select('*')
               .from('lesson_teachers')
               .whereRaw('lesson_teachers.lesson_id = lessons.id')
-              .whereIn('lesson_teachers.teacher_id', teachers);
-          });
+              .whereIn('lesson_teachers.teacher_id', teachers)
+          );
         }
       },
-      filterStudentsCount(query, studentsCount) {
-        if (studentsCount) query.having('studentsCount', '=', studentsCount);
+      filterByStudentsCount(query, studentsCount) {
+        if (studentsCount) query.having(knex.raw('COUNT(*) = ?', studentsCount));
       },
     };
   }

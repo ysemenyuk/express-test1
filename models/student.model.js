@@ -1,6 +1,6 @@
 import pkg from 'objection';
 const { Model } = pkg;
-import path from 'path';
+// import path from 'path';
 import Lesson from './lesson.model.js';
 
 export default class Student extends Model {

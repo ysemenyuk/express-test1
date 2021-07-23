@@ -1,6 +1,7 @@
 import pkg from 'objection';
 const { Model } = pkg;
-import path from 'path';
+// import path from 'path';
+import Lesson from './lesson.model.js';
 
 export default class Teacher extends Model {
   static get tableName() {
@@ -22,16 +23,15 @@ export default class Teacher extends Model {
     return {
       lessons: {
         relation: Model.ManyToManyRelation,
-        modelClass: 'Lesson',
         // modelClass: path.join(path.resolve(), 'models', 'lesson.model.js'),
-
+        modelClass: Lesson,
         join: {
-          from: 'teacher.id',
+          from: 'teachers.id',
           through: {
-            from: 'lessons_teachers.teacher_id',
-            to: 'lessons_teachers.lesson_id',
+            from: 'lesson_teachers.teacher_id',
+            to: 'lesson_teachers.lesson_id',
           },
-          to: 'lesson.id',
+          to: 'lessons.id',
         },
       },
     };

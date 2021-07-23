@@ -1,4 +1,4 @@
-import path from 'path';
+// import path from 'path';
 
 // const migrations = {
 //   directory: path.join(__dirname, 'server', 'migrations'),

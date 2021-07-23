@@ -10,8 +10,9 @@ router.get(
   asyncErrorHandler(async (req, res) => {
     req.logger('lesson.router GET /lessons/');
 
-    const lessons = await lessonController.getAll({
+    const lessons = await lessonController.getAllByParams({
       logger: req.logger,
+      params: req.query,
     });
 
     res.status(200).send(lessons);
